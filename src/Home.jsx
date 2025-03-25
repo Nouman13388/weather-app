@@ -21,7 +21,7 @@ function Home() {
             </nav>
 
             <section className="weather-container">
-                {cityToSearch && <WeatherCard city={cityToSearch} />}
+                {cityToSearch && <WeatherCard city={cityToSearch}/>}
             </section>
         </section>
     );

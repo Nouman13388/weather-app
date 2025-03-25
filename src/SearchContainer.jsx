@@ -15,16 +15,14 @@ function SearchContainer({ setCityToSearch }) {
             });
     }, []);
 
-    const inputChange = (e) => {
-        setSelectedCity(e.target.value);
-    };
-
-    const searchClick = () => {
-        setCityToSearch(selectedCity);
-    };
 
     return (
         <section className="search-container">
+            <datalist id="suggestions">
+                {cities.map((city, index) => (
+                    <option key={index} value={city} />
+                ))}
+            </datalist>
             <input
                 type="text"
                 id="search-bar"
@@ -32,20 +30,19 @@ function SearchContainer({ setCityToSearch }) {
                 list="suggestions"
                 placeholder="City Name..."
                 value={selectedCity}
-                onChange={inputChange}
+                onChange={(e) => {
+                    setSelectedCity(e.target.value);
+                }}
             />
             <button
                 className="search-button"
                 id="search-button"
-                onClick={searchClick}
+                onClick={() => {
+                    setCityToSearch(selectedCity);
+                }}
             >
                 Search
             </button>
-            <datalist id="suggestions">
-                {cities.map((city, index) => (
-                    <option key={index} value={city} />
-                ))}
-            </datalist>
         </section>
     );
 }
