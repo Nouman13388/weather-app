@@ -15,6 +15,13 @@ function SearchContainer({ setCityToSearch }) {
             });
     }, []);
 
+    const handleChange = (e) => {
+        setSelectedCity(e.target.value);
+    }
+
+    const handleClick = () => {
+        setCityToSearch(selectedCity);
+    }
 
     return (
         <section className="search-container">
@@ -30,16 +37,12 @@ function SearchContainer({ setCityToSearch }) {
                 list="suggestions"
                 placeholder="City Name..."
                 value={selectedCity}
-                onChange={(e) => {
-                    setSelectedCity(e.target.value);
-                }}
+                onChange={handleChange}
             />
             <button
                 className="search-button"
                 id="search-button"
-                onClick={() => {
-                    setCityToSearch(selectedCity);
-                }}
+                onClick={handleClick}
             >
                 Search
             </button>

@@ -5,7 +5,6 @@ import { useState } from "react";
 
 function Home() {
     const [cityToSearch, setCityToSearch] = useState("");
-
     return (
         <section className="container">
             <nav className="navbar">

@@ -63,6 +63,12 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.weather-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
 .search-container {
     display: flex;
     align-items: center;
@@ -70,7 +76,6 @@ body {
 }
 
 .search-bar {
-    border: none;
     outline: none;
     font-size: 20px;
     border-radius: 5px;
