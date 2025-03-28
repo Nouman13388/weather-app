@@ -2,24 +2,61 @@ import { useEffect, useState } from "react";
 
 function WeatherCard({ city }) {
   const [weatherData, setWeatherData] = useState(null);
+  const [weatherArray, setWeatherArray] = useState([]);
+  const [error, setError] = useState(null);
   const [isHovered, setHovered] = useState(false);
   const [isExpanded, setExpanded] = useState(false);
-  const [weatherArray, setWeatherArray] = useState([]);
 
   useEffect(() => {
-    if (!city) return;
+    const storedData = localStorage.getItem("weatherData");
+    if (storedData) {
+      try {
+        setWeatherArray(JSON.parse(storedData));
+        console.log("Loaded weather data from storage.");
+      } catch (err) {
+        console.error("Error parsing weather data:", err);
+      }
+    }
+  }, []);
 
+  useEffect(() => {
+    localStorage.setItem("weatherData", JSON.stringify(weatherArray));
+    console.log("Saved weatherArray:", weatherArray);
+  }, [weatherArray]);
+
+  const fetchWeather = (city) => {
     const key = "f527ddffd52e46f286372143250703";
     const url = `https://api.weatherapi.com/v1/current.json?key=${key}&q=${city}`;
-
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        setWeatherData(data);
-        storeData(data);
+        if (data && data.current) {
+          setWeatherData(data);
+          setWeatherArray((prevArray) => [...prevArray, data]);
+          console.log("Weather data stored successfully.");
+        } else {
+          setError("Weather data could not be fetched. Please try again.");
+        }
       })
-      .catch((error) => console.error("Error fetching weather data:", error));
+      .catch((err) => {
+        console.error("Error fetching weather data:", err);
+        setError("Error fetching weather data. Please try again.");
+      });
+  };
+
+  useEffect(() => {
+    if (city) {
+      fetchWeather(city);
+    }
   }, [city]);
+
+  if (error) {
+    return <div className="weather-card">{error}</div>;
+  }
+
+  if (!weatherData) {
+    return <div className="weather-card">Loading weather data...</div>;
+  }
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -31,65 +68,21 @@ function WeatherCard({ city }) {
     setHovered(false);
   };
 
-  const storeData = (data) => {
-    setWeatherArray((prevArray) => [
-      ...prevArray,
-      {
-        name: data.location.name,
-        region: data.location.region,
-        country: data.location.country,
-        temp_c: data.current.temp_c,
-        condition: data.current.condition.text,
-        wind_kph: data.current.wind_kph,
-        humidity: data.current.humidity,
-        feelslike_c: data.current.feelslike_c,
-        uv: data.current.uv,
-      },
-      localStorage.setItem(
-        "weatherData",
-        JSON.stringify([
-          ...prevArray,
-          weatherArray
-        ]),
-      ),
-    ]); 
-  };
-
-  useEffect(() => {
-    localStorage.setItem("weatherData", JSON.stringify(weatherArray));
-    console.log("Saved weatherArray:", weatherArray);
-  }, [weatherArray]);
-
-  useEffect(() => {
-    const storedData = localStorage.getItem("weatherData");
-    if (storedData) {
-      setWeatherArray(JSON.parse(storedData));
-      console.log("Loaded data from storage:", JSON.parse(storedData));
-    }
-  }, []);
-
-
-  const expandCard = (weatherData) => {
-    if (!weatherData) return null;
+  const expandCard = (data) => {
+    if (!data || !data.current) return null;
     return (
       <div className="expanded-card">
-        <section className="wind">
-          Wind: {weatherData.current.wind_kph} km/h
-        </section>
+        <section className="wind">Wind: {data.current.wind_kph} km/h</section>
         <section className="humidity">
-          Humidity: {weatherData.current.humidity}%
+          Humidity: {data.current.humidity}%
         </section>
         <section className="feels-like">
-          Feels Like: {parseInt(weatherData.current.feelslike_c)}°C
+          Feels Like: {parseInt(data.current.feelslike_c)}°C
         </section>
-        <section className="uv">UV: {weatherData.current.uv}</section>
+        <section className="uv">UV: {data.current.uv}</section>
       </div>
     );
   };
-
-  if (!weatherData) {
-    return <div className="weather-card">Loading weather data...</div>;
-  }
 
   return (
     <div
@@ -101,7 +94,6 @@ function WeatherCard({ city }) {
         src={weatherData.current.condition.icon}
         alt={weatherData.current.condition.text}
       />
-      {/*{storeData()}*/}
       <div className="temperature">
         {parseInt(weatherData.current.temp_c)} °C
       </div>
