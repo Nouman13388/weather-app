@@ -58,6 +58,29 @@ function WeatherCard({ city }) {
     setHovered(false);
   };
 
+  const renderWeatherCard = () => {
+    return(
+      <div
+      className="weather-card"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <img
+        src={weatherData.current.condition.icon}
+        alt={weatherData.current.condition.text}
+      />
+      <div className="temperature">
+        {parseInt(weatherData.current.temp_c)} °C
+      </div>
+      <div className="description">{weatherData.current.condition.text}</div>
+      <div className="location">
+        {weatherData.location.name}, {weatherData.location.region}
+      </div>
+      {isHovered && isExpanded && expandCard(weatherData)}
+    </div>
+    )
+    };
+
   const expandCard = (data) => {
     if (!data || !data.current) return null;
     return (
@@ -78,26 +101,7 @@ function WeatherCard({ city }) {
     return <div className="weather-card">Loading weather data...</div>;
   }
 
-  return (
-    <div
-      className="weather-card"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <img
-        src={weatherData.current.condition.icon}
-        alt={weatherData.current.condition.text}
-      />
-      <div className="temperature">
-        {parseInt(weatherData.current.temp_c)} °C
-      </div>
-      <div className="description">{weatherData.current.condition.text}</div>
-      <div className="location">
-        {weatherData.location.name}, {weatherData.location.region}
-      </div>
-      {isHovered && isExpanded && expandCard(weatherData)}
-    </div>
-  );
+  return renderWeatherCard();
 }
 
 export default WeatherCard;
