@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 function WeatherCard({ city }) {
   const [weatherData, setWeatherData] = useState(null);
   const [weatherArray, setWeatherArray] = useState([]);
-  const [error, setError] = useState(null);
   const [isHovered, setHovered] = useState(false);
   const [isExpanded, setExpanded] = useState(false);
 
@@ -35,12 +34,11 @@ function WeatherCard({ city }) {
           setWeatherArray((prevArray) => [...prevArray, data]);
           console.log("Weather data stored successfully.");
         } else {
-          setError("Weather data could not be fetched. Please try again.");
+          console.error("Weather data could not be fetched. Please try again.");
         }
       })
       .catch((err) => {
         console.error("Error fetching weather data:", err);
-        setError("Error fetching weather data. Please try again.");
       });
   };
 
@@ -49,14 +47,6 @@ function WeatherCard({ city }) {
       fetchWeather(city);
     }
   }, [city]);
-
-  if (error) {
-    return <div className="weather-card">{error}</div>;
-  }
-
-  if (!weatherData) {
-    return <div className="weather-card">Loading weather data...</div>;
-  }
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -83,6 +73,10 @@ function WeatherCard({ city }) {
       </div>
     );
   };
+
+  if (!weatherData) {
+    return <div className="weather-card">Loading weather data...</div>;
+  }
 
   return (
     <div
