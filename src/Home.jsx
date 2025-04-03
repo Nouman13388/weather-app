@@ -1,6 +1,7 @@
 import "./App.css";
+import FetchWeather from "./fetchWeather.jsx";
 import SearchContainer from "./SearchContainer.jsx";
-import WeatherCard from "./WeatherCard.jsx";
+import LoadData from "./LoadData.jsx";
 import { useState } from "react";
 
 function Home() {
@@ -27,8 +28,9 @@ function Home() {
       </nav>
 
       <section className="weather-container">
+        <LoadData/>
         {searchedCities.map((city, index) => (
-          <WeatherCard key={index} city={city} />
+          <FetchWeather key={index} city={city} />
         ))}
       </section>
     </section>
