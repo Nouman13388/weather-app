@@ -1,11 +1,12 @@
 import "./App.css";
-import FetchWeather from "./fetchWeather.jsx";
+import FetchWeather from "./FetchWeather.jsx";
 import SearchContainer from "./SearchContainer.jsx";
 import LoadData from "./LoadData.jsx";
 import { useState } from "react";
 
 function Home() {
   const [searchedCities, setSearchedCities] = useState([]);
+  // localStorage.removeItem("weatherData")
 
   const handleCitySearch = (city) => {
     if (city) {
