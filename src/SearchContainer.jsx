@@ -8,7 +8,7 @@ function SearchContainer({ setCityToSearch }) {
     try {
       const response = await fetch("src/cities.json");
       const loadedData = await response.json();
-      setCities(loadedData.cities);
+      setCities(loadedData.cities);``
     } catch (error) {
       console.error("Error loading Local Data: ", error);
     }
@@ -23,7 +23,7 @@ function SearchContainer({ setCityToSearch }) {
   };
 
   useEffect(() => {
-    loadData;
+    loadData();
   }, []);
 
   return (
