@@ -31,9 +31,22 @@ body {
     align-items: center;
 }
 
-.logo {
+.logo  {
     width: 4rem;
     height: 4rem;
+}
+
+.menu-icon {
+    width: 2.5rem;
+    height: 3rem;
+    margin: 1rem;
+}
+
+.menu-icon :hover{
+    box-shadow: 0 8px 16px 0 rgb(111, 109, 109);
+    border-radius: 20px;
+    transform: scale(1.1);
+    transition: 0.5s;
 }
 
 .weather-icon {

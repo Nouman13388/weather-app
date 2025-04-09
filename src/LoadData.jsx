@@ -1,7 +1,6 @@
 import WeatherCard from "./WeatherCard";
 
 function LoadData() {
-//   localStorage.removeItem("weatherData");
   const storedData = JSON.parse(localStorage.getItem("weatherData")) || [];
   return (
     <>

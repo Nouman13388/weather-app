@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Settings from "./Settings.jsx";
 
-function SearchContainer({ setCityToSearch }) {
+
+function SearchContainer({ handleSetCityToSearch }) {
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
 
@@ -8,7 +10,7 @@ function SearchContainer({ setCityToSearch }) {
     try {
       const response = await fetch("src/cities.json");
       const loadedData = await response.json();
-      setCities(loadedData.cities);``
+      setCities(loadedData.cities);
     } catch (error) {
       console.error("Error loading Local Data: ", error);
     }
@@ -19,7 +21,7 @@ function SearchContainer({ setCityToSearch }) {
   };
 
   const handleClick = () => {
-    setCityToSearch(selectedCity);
+    handleSetCityToSearch(selectedCity);
   };
 
   useEffect(() => {

@@ -4,7 +4,6 @@ function WeatherCard({weatherData}) {
 
   const [isHovered, setHovered] = useState(false);
   const [isExpanded, setExpanded] = useState(false);
-
   
 
   const handleMouseEnter = () => {
@@ -16,6 +15,10 @@ function WeatherCard({weatherData}) {
     setExpanded(false);
     setHovered(false);
   };
+
+  const deleteCard = () => {
+    weatherData = null
+  }
 
   const renderWeatherCard = () => {
     return(
@@ -52,6 +55,7 @@ function WeatherCard({weatherData}) {
           Feels Like: {parseInt(data.current.feelslike_c)}°C
         </section>
         <section className="uv">UV: {data.current.uv}</section>
+        <button onClick={deleteCard}>Delete</button>
       </div>
     );
   };
