@@ -10,7 +10,7 @@ function FetchWeather({ city }) {
     try {
       const response = await fetch(url);
       const data = await response.json();
-        setWeatherArray((prevArray) => [...prevArray, data]);
+      setWeatherArray((prevArray) => [...prevArray, data]);
     } catch (error) {
       console.error("Error Fetching data:", error);
     }
@@ -35,7 +35,11 @@ function FetchWeather({ city }) {
     }
   }, [weatherArray]);
 
-  return <WeatherCard weatherData={weatherArray[weatherArray.length - 1]} />;
+  return (
+    <>
+      <WeatherCard weatherData={weatherArray[weatherArray.length - 1]} />
+    </>
+  );
 }
 
 export default FetchWeather;

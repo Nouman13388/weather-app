@@ -1,10 +1,8 @@
 import { useState } from "react";
 
-function WeatherCard({weatherData}) {
-
+function WeatherCard({ weatherData, onDelete }) {
   const [isHovered, setHovered] = useState(false);
   const [isExpanded, setExpanded] = useState(false);
-  
 
   const handleMouseEnter = () => {
     setHovered(true);
@@ -16,32 +14,32 @@ function WeatherCard({weatherData}) {
     setHovered(false);
   };
 
-  const deleteCard = () => {
-    weatherData = null
-  }
+  const handleDelete = () => {
+    onDelete();
+  };
 
   const renderWeatherCard = () => {
-    return(
+    return (
       <div
-      className="weather-card"
-      onPointerEnter={handleMouseEnter}
-      onPointerLeave={handleMouseLeave}
-    >
-      <img
-        src={weatherData.current.condition.icon}
-        alt={weatherData.current.condition.text}
-      />
-      <div className="temperature">
-        {parseInt(weatherData.current.temp_c)} °C
+        className="weather-card"
+        onPointerEnter={handleMouseEnter}
+        onPointerLeave={handleMouseLeave}
+      >
+        <img
+          src={weatherData.current.condition.icon}
+          alt={weatherData.current.condition.text}
+        />
+        <div className="temperature">
+          {parseInt(weatherData.current.temp_c)} °C
+        </div>
+        <div className="description">{weatherData.current.condition.text}</div>
+        <div className="location">
+          {weatherData.location.name}, {weatherData.location.region}
+        </div>
+        {isHovered && isExpanded && expandCard(weatherData)}
       </div>
-      <div className="description">{weatherData.current.condition.text}</div>
-      <div className="location">
-        {weatherData.location.name}, {weatherData.location.region}
-      </div>
-      {isHovered && isExpanded && expandCard(weatherData)}
-    </div>
-    )
-    };
+    );
+  };
 
   const expandCard = (data) => {
     if (!data || !data.current) return null;
@@ -55,7 +53,7 @@ function WeatherCard({weatherData}) {
           Feels Like: {parseInt(data.current.feelslike_c)}°C
         </section>
         <section className="uv">UV: {data.current.uv}</section>
-        <button onClick={deleteCard}>Delete</button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     );
   };
