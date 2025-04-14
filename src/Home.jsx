@@ -4,15 +4,19 @@ import SearchContainer from "./SearchContainer.jsx";
 import LoadData from "./LoadData.jsx";
 import { useState } from "react";
 
-function Home() {
+function Home({renderSettings}) {
   const [searchedCities, setSearchedCities] = useState([]);
-  // localStorage.removeItem("weatherData")
 
   const handleCitySearch = (city) => {
     if (city) {
       setSearchedCities((prevCities) => [...prevCities, city]);
     }
   };
+
+  const handleSettings = () => {
+    return renderSettings()
+  }
+
 
   return (
     <section className="container">
@@ -25,7 +29,10 @@ function Home() {
           />
           <h1>Weather App</h1>
         </div>
+        <div className="search-container">
         <SearchContainer setCityToSearch={handleCitySearch} />
+        <img src="src\assets\settings-64.ico" alt="Settings Icon" className="settings-icon" onClick={handleSettings}/>
+        </div>
       </nav>
 
       <section className="weather-container">

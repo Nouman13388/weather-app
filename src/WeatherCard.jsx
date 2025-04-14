@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-function WeatherCard({weatherData}) {
-
+function WeatherCard({ weatherData, onDelete}) {
   const [isHovered, setHovered] = useState(false);
   const [isExpanded, setExpanded] = useState(false);
 
@@ -52,6 +51,7 @@ function WeatherCard({weatherData}) {
           Feels Like: {parseInt(data.current.feelslike_c)}°C
         </section>
         <section className="uv">UV: {data.current.uv}</section>
+        <button onClick={onDelete}>Delete</button>
       </div>
     );
   };

@@ -1,13 +1,28 @@
 import WeatherCard from "./WeatherCard";
+import { useState } from "react";
 
 function LoadData() {
-//   localStorage.removeItem("weatherData");
-  const storedData = JSON.parse(localStorage.getItem("weatherData")) || [];
+  const [storedData, setStoredData] = useState(
+    JSON.parse(localStorage.getItem("weatherData")) || []
+  );
+
+
+  console.log(storedData);
+  const handleDelete = (indexToDel) => {
+    const updatedData = storedData.filter((_, index) => index !== indexToDel);
+    localStorage.setItem("weatherData", JSON.stringify(updatedData));
+    setStoredData(updatedData);
+  };
+
+
   return (
     <>
       {storedData.map((data, index) => (
-        console.log("Loaded Data: ",data),
-        <WeatherCard key={index} weatherData={data} />
+        <WeatherCard
+          key={index}
+          weatherData={data}
+          onDelete={() => handleDelete(index)}
+        />
       ))}
     </>
   );

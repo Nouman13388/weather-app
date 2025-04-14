@@ -22,6 +22,7 @@ function FetchWeather({ city }) {
     localStorage.setItem("weatherData", JSON.stringify(storedData));
   };
 
+
   useEffect(() => {
     if (city) {
       fetchWeatherData(city);
