@@ -1,39 +1,36 @@
 import "./App.css";
 import Home from "./Home";
 import Settings from "./Settings";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-    const [isPressed, setIsPressed] = useState(false);
+  const [route, setRoute] = useState(window.location.pathname);
 
-    useEffect(() => {
-        if (isPressed) {
-            window.history.pushState({}, '', '/settings');
-        } else {
-            window.history.pushState({}, '', '/');
-        }
-        console.log("pathName: ",window.location.pathname);
-    }, [isPressed]);
-
-    const handleSettings = () => {
-        setIsPressed(true);
-        console.log("Settings Icon is Pressed");
+  useEffect(() => {
+    const onPopState = () => {
+      setRoute(window.location.pathname);
     };
 
-    const handleBack = () => {
-        setIsPressed(false);
-        console.log("Back Button is Pressed");
-    };
+    window.addEventListener("popstate", onPopState);
 
-    const renderPages = () => {
-        if (!isPressed) {
-            return <Home renderSettings={handleSettings} />;
-        } else {
-            return <Settings renderHome={handleBack} />;
-        }
+    return () => {
+      window.removeEventListener("popstate", onPopState);
     };
+  }, []);
 
-    return renderPages();
+  const navigate = (path) => {
+    window.history.pushState({}, "", path);
+    setRoute(path);
+  };
+
+  const renderPage = () => {
+    if (route === "/settings") {
+      return <Settings renderHome={() => navigate("/")} />;
+    }
+    return <Home renderSettings={() => navigate("/settings")} />;
+  };
+
+  return <>{renderPage()}</>;
 }
 
 export default App;

@@ -1,10 +1,8 @@
-import "./App.css";
-import FetchWeather from "./FetchWeather.jsx";
-import SearchContainer from "./SearchContainer.jsx";
-import LoadData from "./LoadData.jsx";
 import { useState } from "react";
+import SearchContainer from './SearchContainer';
+import LoadData from './LoadData';
 
-function Home({renderSettings}) {
+function Home({ renderSettings }) {
   const [searchedCities, setSearchedCities] = useState([]);
 
   const handleCitySearch = (city) => {
@@ -12,11 +10,6 @@ function Home({renderSettings}) {
       setSearchedCities((prevCities) => [...prevCities, city]);
     }
   };
-
-  const handleSettings = () => {
-    return renderSettings()
-  }
-
 
   return (
     <section className="container">
@@ -30,13 +23,18 @@ function Home({renderSettings}) {
           <h1>Weather App</h1>
         </div>
         <div className="search-container">
-        <SearchContainer setCityToSearch={handleCitySearch} />
-        <img src="src\assets\settings-64.ico" alt="Settings Icon" className="settings-icon" onClick={handleSettings}/>
+          <SearchContainer setCityToSearch={handleCitySearch} />
+          <img
+            src="src/assets/settings-64.ico"
+            alt="Settings Icon"
+            className="settings-icon"
+            onClick={renderSettings}
+          />
         </div>
       </nav>
 
       <section className="weather-container">
-        <LoadData/>
+        <LoadData />
         {searchedCities.map((city, index) => (
           <FetchWeather key={index} city={city} />
         ))}
