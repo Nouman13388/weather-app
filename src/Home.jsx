@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SearchContainer from './SearchContainer';
 import LoadData from './LoadData';
+import FetchWeather from './FetchWeather';
 
 function Home({ renderSettings }) {
   const [searchedCities, setSearchedCities] = useState([]);
