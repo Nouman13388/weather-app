@@ -6,7 +6,7 @@ function SearchContainer({ setCityToSearch }) {
 
   const loadData = async () => {
     try {
-      const response = await fetch("src/cities.json");
+      const response = await fetch("src/data/cities.json");
       const loadedData = await response.json();
       setCities(loadedData.cities);``
     } catch (error) {
