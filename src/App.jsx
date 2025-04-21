@@ -1,6 +1,6 @@
 import "./App.css";
-import Home from "./Home";
-import Settings from "./Settings";
+import Home from "./components/Home";
+import Settings from "./components/Settings";
 import { useEffect, useState } from "react";
 
 function App() {
